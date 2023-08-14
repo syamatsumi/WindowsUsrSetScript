@@ -1,4 +1,7 @@
 @echo off
+rem UTF-8で保存する際は下記一行が必要。
+chcp 65001
+
 REM 権限を自動で確認し、必要なら強引に昇格させて無警告に実行。
 whoami /priv | find "SeDebugPrivilege" > nul
 if %errorlevel% neq 0 ( goto getPrivileges )
@@ -18,6 +21,9 @@ exit /b
 setlocal & pushd .
 REM ここから下に処理内容を記述します。
 @echo off
+rem UTF-8で保存する際は下記一行が必要。
+chcp 65001
+
 cd /d %~dp0
 
 echo このユーザーの主にエクスプローラに関する設定変更
