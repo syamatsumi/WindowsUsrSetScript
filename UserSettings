@@ -129,29 +129,6 @@ echo インデックスが作成されていない場所の検索
   echo ファイル名と内容を常に検索する
     reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Search\PrimaryProperties\UnindexedLocations" /v "SearchOnly" /t REG_DWORD /d "1" /f
 
-echo 以下あんま触んない方が良さそうなエントリーなのでスキップ
-call :skipexplorer
-echo エクスプローラの設定（フォルダーオプション）全般
-echo プライバシー
-  echo 最近使用したファイルをクイックアクセスに表示する
-    reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer" /v "ShowRecent" /t REG_DWORD /d "1" /f
-  echo 頻繁に使用されるフォルダーを表示する
-    reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer" /v "ShowFrequent" /t REG_DWORD /d "1" /f
-  echo Office.comのファイルを表示する
-    reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer" /v "ShowCloudFilesInQuickAccess" /t REG_DWORD /d "1" /f
-
-echo エクスプローラの設定（フォルダーオプション）表示
-echo ナビゲーションウィンドウ
-  echo すべてのフォルダーを表示しない
-    reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "NavPaneShowAllFolders" /t REG_DWORD /d "0" /f
-  echo 可用性の状態を常に表示しない
-    reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "NavPaneExpandToCurrentFolder" /t REG_DWORD /d "0" /f
-  echo 開いているフォルダーまで展開しない
-    reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "NavPaneExpandToCurrentFolder" /t REG_DWORD /d "0" /f
-:skipexplorer
-
-
-
 echo エクスプローラの設定 タスクバーの設定
 echo チャットの非表示
   reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "TaskbarMn" /t REG_DWORD /d "0" /f
@@ -191,7 +168,7 @@ echo for Windows11
 echo ウィジェットの非表示
   reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "TaskbarDa" /t REG_DWORD /d "0" /f
 echo タスクバーの左寄せ
-  reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "TakbarAl" /t REG_DWORD /d "0" /f
+  reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "TakbarAl" /t REG_DWORD /d "2" /f
 echo エクスプローラの設定 右クリックは旧メニュー強制
   reg add "HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /ve /f
 
@@ -208,13 +185,6 @@ echo デスクトップにネットワークアイコンを表示
   reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel" /v "{F02C1A0D-BE21-4350-88B0-7367FC96EF3C}" /t REG_DWORD /d "0" /f
 echo デスクトップにゴミ箱を表示
   reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel" /v "{645FF040-5081-101B-9F08-00AA002F954E}" /t REG_DWORD /d "0" /f
-
-
-
-echo 壁紙を適当に変更
-echo F | xcopy /E /V %~dp0wallpaper.jpg %USERPROFILE%\Pictures\wallpaper\wallpaper.jpg
-reg add "HKEY_CURRENT_USER\Control Panel\Desktop" /v "Wallpaper" /t REG_SZ /d %USERPROFILE%\Pictures\wallpaper\wallpaper.jpg /f
-
 
 
 echo コマンドプロンプトの設定
@@ -235,9 +205,6 @@ reg add "HKEY_CURRENT_USER\Software\Classes\Drive\shell\Powershell" /v "ShowBase
 echo ネットワーク絡みの設定
 echo 未インストールのユニバーサルWindowsプラットフォーム向けクラウドコンテンツを無効化する
   reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\CloudContent" /v "DisableWindowsConsumerFeatures" /t REG_DWORD /d "1" /f
-
-echo インターネットの自動構成スクリプトを設定します。(下記はSymantec WSS例)
-rem  reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings" /v "AutoConfigURL" /t REG_SZ /d "hogehoge" /f
 
 echo ホームページを設定します。
   reg add "HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\Main" /v "Start Page" /t REG_SZ /d "https://google.co.jp/" /f
