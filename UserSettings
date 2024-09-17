@@ -1,3 +1,5 @@
+```bat
+
 @echo off
 rem UTF-8で保存する際は下記一行が必要。
 chcp 65001
@@ -172,7 +174,15 @@ echo タスクバーの左寄せ
 echo エクスプローラの設定 右クリックは旧メニュー強制
   reg add "HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /ve /f
 
-
+echo メモリ圧縮の停止（充分にメモリが大きい場合のみ。またHDD環境でPrefetch切ると悲惨）
+  ::powershell -Command "Disable-MMAgent -AppLaunchPrefetching"
+  powershell -Command "Disable-MMAgent -ApplicationPreLaunch"
+  powershell -Command "Disable-MMAgent -MemoryCompression"
+  ::powershell -Command "Disable-MMAgent -OperationAPI"
+  powershell -Command "Disable-MMAgent -PageCombining"
+  :: Win11 24H2で-apと-oaは何故か動かないのでレジストリの追記で代用。
+  reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters" /v "EnablePrefetcher" /t REG_DWORD /d "0" /f
+  
 
 echo エクスプローラの設定 デスクトップの設定
 echo デスクトップにコンピューター（PC）アイコンを表示
@@ -218,3 +228,4 @@ echo ホームページを設定します。
 
 echo 処理が終わりました。再起動しておくことをお勧めします。
 pause
+```
